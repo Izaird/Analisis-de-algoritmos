@@ -6,15 +6,23 @@
 #include <algorithm>
 
 struct transition{
-  std::string actual_state,event,next_state;
+  int actual_state;
+  std::string event;  
+  int next_state;
 };
 
-struct transition{
-  std::string event,next_state;
+struct SummaryTransition{
+  std::string event;
+  int next_state;
 };
 
 std::ostream& operator<<(std::ostream& stream, const transition& transition){
   stream << transition.actual_state << ","<< transition.event << "," << transition.next_state;
+  return stream;
+}
+
+std::ostream& operator<<(std::ostream& stream, const SummaryTransition& transition){
+  stream << transition.event << "," << transition.next_state;
   return stream;
 }
 //CLASSES
@@ -22,7 +30,7 @@ class State{
 public:
   bool initial, final;
   int number;
-  std::vector<std::string> transitions;
+  std::vector<SummaryTransition> transitions;
   State(int a, bool b, bool c);
 };
 
@@ -32,9 +40,6 @@ State::State(int a, bool b, bool c){
   final = c;
 }
 
-State::GetNum(){
-  
-}
 
 //DECLARATIONS
 std::vector<std::string> StrToVectStr(std::string str);
@@ -51,6 +56,7 @@ states: all the states
   std::vector<std::string> lines, alphabet;
   std::vector<transition> all_transitions;
   std::vector<State> obj_states;
+  std::vector<SummaryTransition> aux;
   lines = GetLines("input");
   states = StrToVectInt(lines[0]);
   states.push_back(-1);
@@ -77,7 +83,15 @@ states: all the states
   }
    
 
-   std::cout << "prueba" << std::endl;
+  for(int i=0; i < obj_states.size(); i++){
+    for(int j=0; j < all_transitions.size(); j++){
+      if(all_transitions[j].actual_state == obj_states[i].number){
+        aux.push_back({all_transitions[j].event , all_transitions[j].next_state});
+      }
+    }
+    obj_states[i].transitions = aux;
+    aux.clear();
+  }
   return 1;
 }
 
@@ -134,19 +148,20 @@ std::vector<int> StrToVectInt(std::string str){
 }
 
 std::vector<transition> ReadTransitions(const std::vector<std::string> &lines){
-  std::vector<transition> transitions;//array to save the transitions 
-  std::string A,B,C,aux;
+  std::vector<transition> transitions;//array to save the transitionC;
+  std::string B,aux;
+  int A,C;
   std::stringstream ss;
 
   for(int i= 4; i < lines.size(); i++){
     aux = lines[i];
     std::stringstream ss(aux);
     getline(ss,aux, ',');
-    A=aux;
+    A=std::stoi(aux);
     getline(ss,aux, ',');
     B=aux;
     getline(ss,aux, ',');
-    C=aux;  
+    C=std::stoi(aux);  
     transitions.push_back({A, B, C});
   }
   return transitions;
