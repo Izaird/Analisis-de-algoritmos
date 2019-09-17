@@ -1,18 +1,30 @@
- 
-#include<iostream>
-#include<fstream>
-using namespace std;
- 
-int main()
-{
-    int count = 0;
-    string line;
- 
-    /* Creating input filestream */ 
-    ifstream file("input.txt");
-    while (getline(file, line))
-        count++;
- 
-    cout << "Numbers of lines in the file : " << count << endl;
+#include <iostream>
+#include <string>
+#include <vector>
+#include <ctime>
+#include <numeric>
+#include <math.h>
+
+
+class Animal{
+private:
+    std::string name;
+    double height;
+    double weight;
+    static int numOfAnimals;//its gonna be the same for all the objects 
+
+
+public:
+    std::string GetName(){
+        return name;
+    }
+    void SetName(std::string name){
+        this->name = name;
+    }
+
+
+};
+
+int main(){
     return 0;
 }
