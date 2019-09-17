@@ -35,7 +35,10 @@ std::vector<std::string> GetLines(std::string file);//Save all the lines of the 
 std::vector<transition> ReadTransitions(const std::vector<std::string> &lines);
 
 int main(){
-
+/*
+Creation of variables to contain 
+states: all the states 
+*/
   std::vector<int> states, initial_state, acceptance_states;
   std::vector<std::string> lines, alphabet;
   std::vector<transition> all_transitions;
@@ -64,6 +67,10 @@ int main(){
     }
   obj_states.push_back(State(states[i],initial,final));
   }
+   
+
+   std::cout << "prueba" << std::endl;
+  return 1;
 }
 
 
