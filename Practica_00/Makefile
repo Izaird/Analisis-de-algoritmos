@@ -1,2 +1,3 @@
 all: 
-	g++ main.cpp -o main
+	g++ -o main main.cpp -g
+

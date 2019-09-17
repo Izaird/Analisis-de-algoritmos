@@ -9,6 +9,10 @@ struct transition{
   std::string actual_state,event,next_state;
 };
 
+struct transition{
+  std::string event,next_state;
+};
+
 std::ostream& operator<<(std::ostream& stream, const transition& transition){
   stream << transition.actual_state << ","<< transition.event << "," << transition.next_state;
   return stream;
@@ -28,6 +32,10 @@ State::State(int a, bool b, bool c){
   final = c;
 }
 
+State::GetNum(){
+  
+}
+
 //DECLARATIONS
 std::vector<std::string> StrToVectStr(std::string str);
 std::vector<int> StrToVectInt(std::string str);
@@ -37,7 +45,7 @@ std::vector<transition> ReadTransitions(const std::vector<std::string> &lines);
 int main(){
 /*
 Creation of variables to contain 
-states: all the states 
+states: all the states  
 */
   std::vector<int> states, initial_state, acceptance_states;
   std::vector<std::string> lines, alphabet;
