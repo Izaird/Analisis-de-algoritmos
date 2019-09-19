@@ -25,6 +25,7 @@ private:
   std::vector<transition> transitions;
 public:
   void setState(int a, bool b, bool c);
+  void setTransition(transition transition);
   int getNumber();
   bool getInitial();
   bool getAccepted();
@@ -36,9 +37,15 @@ void State::setState(int a, bool b, bool c){
   accepted = c;
 }
 
+  void State::setTransition(transition transition){transitions.push_back(transition);}
+  int State::getNumber(){return number;}
+  bool State::getInitial(){return initial;}
+  bool State::getAccepted(){return accepted;}
+
 
 
 //DECLARATIONS
+int getFirstElement(std::string line);
 std::vector<std::string> StrToVectStr(std::string str);
 std::vector<int> StrToVectInt(std::string str);
 std::vector<std::string> GetLines(std::string file);//Save all the lines of the document in an arrangement to have better handling on these
@@ -77,8 +84,18 @@ int main(){
   obj_states.push_back(state);
   }
 
-  obj_states.size();
-   
+  for(int i=4; i < lines.size(); i++){
+    bool found = true;
+    std::string event;
+    int j=0, next_state=0;
+      while(found){
+        if(getFirstElement(lines[i]) == obj_states[j].getNumber()){
+          
+        }
+      }
+    
+    
+  }
 
 
   return 1;
@@ -136,3 +153,17 @@ std::vector<int> StrToVectInt(std::string str){
   return vect;
 }
 
+int getFirstElement(std::string line){
+  std::string aux;
+  int x = NULL;
+  for(int i=0; i < line.length(); i++){
+    if(line[i]==44){
+      std::stringstream ss(aux);
+      ss >> x;
+      return x;
+    }
+    else
+      aux += line[i];
+  }
+  return x;
+}
