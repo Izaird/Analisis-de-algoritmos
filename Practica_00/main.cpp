@@ -11,59 +11,52 @@ struct transition{
   int next_state;
 };
 
-struct SummaryTransition{
-  std::string event;
-  int next_state;
-};
 
 std::ostream& operator<<(std::ostream& stream, const transition& transition){
   stream << transition.actual_state << ","<< transition.event << "," << transition.next_state;
   return stream;
 }
 
-std::ostream& operator<<(std::ostream& stream, const SummaryTransition& transition){
-  stream << transition.event << "," << transition.next_state;
-  return stream;
-}
 //CLASSES
 class State{
-public:
-  bool initial, final;
+private:
+  bool initial, accepted;
   int number;
-  std::vector<SummaryTransition> transitions;
-  State(int a, bool b, bool c);
+  std::vector<transition> transitions;
+public:
+  void setState(int a, bool b, bool c);
+  int getNumber();
+  bool getInitial();
+  bool getAccepted();
 };
 
-State::State(int a, bool b, bool c){
+void State::setState(int a, bool b, bool c){
   number = a;
   initial = b;
-  final = c;
+  accepted = c;
 }
+
 
 
 //DECLARATIONS
 std::vector<std::string> StrToVectStr(std::string str);
 std::vector<int> StrToVectInt(std::string str);
 std::vector<std::string> GetLines(std::string file);//Save all the lines of the document in an arrangement to have better handling on these
-std::vector<transition> ReadTransitions(const std::vector<std::string> &lines);
 
 int main(){
-/*
-Creation of variables to contain 
-states: all the states  
-*/
   std::vector<int> states, initial_state, acceptance_states;
   std::vector<std::string> lines, alphabet;
   std::vector<transition> all_transitions;
   std::vector<State> obj_states;
-  std::vector<SummaryTransition> aux;
+  std::vector<transition> aux;
   lines = GetLines("input");
   states = StrToVectInt(lines[0]);
   states.push_back(-1);
   alphabet = StrToVectStr(lines[1]);
   initial_state = StrToVectInt(lines[2]);
   acceptance_states = StrToVectInt(lines[3]);
-  all_transitions = ReadTransitions(lines);
+
+
   for(int i=0; i<states.size(); i++){
     bool initial, final;
     if(std::find(initial_state.begin(), initial_state.end(), states[i]) != initial_state.end()) {
@@ -79,19 +72,15 @@ states: all the states
     else{
       final = false;
     }
-  obj_states.push_back(State(states[i],initial,final));
+  State state;
+  state.setState(states[i],initial,final);
+  obj_states.push_back(state);
   }
+
+  obj_states.size();
    
 
-  for(int i=0; i < obj_states.size(); i++){
-    for(int j=0; j < all_transitions.size(); j++){
-      if(all_transitions[j].actual_state == obj_states[i].number){
-        aux.push_back({all_transitions[j].event , all_transitions[j].next_state});
-      }
-    }
-    obj_states[i].transitions = aux;
-    aux.clear();
-  }
+
   return 1;
 }
 
@@ -147,22 +136,3 @@ std::vector<int> StrToVectInt(std::string str){
   return vect;
 }
 
-std::vector<transition> ReadTransitions(const std::vector<std::string> &lines){
-  std::vector<transition> transitions;//array to save the transitionC;
-  std::string B,aux;
-  int A,C;
-  std::stringstream ss;
-
-  for(int i= 4; i < lines.size(); i++){
-    aux = lines[i];
-    std::stringstream ss(aux);
-    getline(ss,aux, ',');
-    A=std::stoi(aux);
-    getline(ss,aux, ',');
-    B=aux;
-    getline(ss,aux, ',');
-    C=std::stoi(aux);  
-    transitions.push_back({A, B, C});
-  }
-  return transitions;
-}
