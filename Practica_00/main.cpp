@@ -167,3 +167,7 @@ int getFirstElement(std::string line){
   }
   return x;
 }
+
+transition stringToTransition(int i, std::vector<std::string> lines){
+  
+}
