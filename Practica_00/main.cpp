@@ -6,14 +6,20 @@
 #include <algorithm>
 
 struct transition{
-  int actual_state;
   std::string event;  
   int next_state;
+
+  void setTransition(std::string a, int b){
+  event = a;
+  next_state = b;
+  }
 };
 
 
+
+
 std::ostream& operator<<(std::ostream& stream, const transition& transition){
-  stream << transition.actual_state << ","<< transition.event << "," << transition.next_state;
+  stream << transition.event << "," << transition.next_state;
   return stream;
 }
 
@@ -45,6 +51,7 @@ void State::setState(int a, bool b, bool c){
 
 
 //DECLARATIONS
+transition stringToTransition(int i, const std::vector<std::string>& lines);
 int getFirstElement(std::string line);
 std::vector<std::string> StrToVectStr(std::string str);
 std::vector<int> StrToVectInt(std::string str);
@@ -90,15 +97,22 @@ int main(){
     int j=0, next_state=0;
       while(found){
         if(getFirstElement(lines[i]) == obj_states[j].getNumber()){
-          
+          obj_states[j].setTransition(stringToTransition(i,lines));
+          j=0;
+          found =false;
         }
+        else
+        {
+          j++;
+        }
+        
       }
     
     
   }
 
 
-  return 1;
+  return 0;
 }
 
 
@@ -155,7 +169,7 @@ std::vector<int> StrToVectInt(std::string str){
 
 int getFirstElement(std::string line){
   std::string aux;
-  int x = NULL;
+  int x;
   for(int i=0; i < line.length(); i++){
     if(line[i]==44){
       std::stringstream ss(aux);
@@ -168,6 +182,18 @@ int getFirstElement(std::string line){
   return x;
 }
 
-transition stringToTransition(int i, std::vector<std::string> lines){
-  
+transition stringToTransition(int i, const std::vector<std::string>& lines){
+  std::string B,aux;
+  aux = lines[i];
+  int C;
+  transition transition_line;
+  std::stringstream ss(aux);
+  getline(ss,aux, ',');
+  getline(ss,aux, ',');
+  B=aux;
+  getline(ss,aux, ',');
+  C=std::stoi(aux);  
+  transition_line.setTransition(B,C);
+  return transition_line;
 }
+
