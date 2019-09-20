@@ -1,6 +1,7 @@
 #include "automata.h"
 
 
+
 int main(){
   std::vector<int> states, initial_state, acceptance_states;
   std::vector<std::string> lines, alphabet;
