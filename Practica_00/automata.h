@@ -7,10 +7,10 @@
 #include <map>
 
 struct transition{
-  std::string event;  
+  char event;  
   int next_state;
 
-  transition(std::string a, int b){
+  transition(char a, int b){
   event = a;
   next_state = b;
   }
@@ -31,11 +31,11 @@ public:
   int getNumber();
   bool getInitial();
   bool getAccepted();
-  std::vector<std::string> getEventsOfTransitions();
+  std::vector<char> getEventsOfTransitions();
   std::vector<transition> getTransitions();
+  std::string getNextState(char symbol);
   int numberOfTransitions();
-  std::string getEventOfTransition(int transition);
-  std::string getNextStates(std::string symbol);
+  char getEventOfTransition(int transition);
   int getNextStateOfTransition(int num_transition);
 };
 
@@ -43,13 +43,13 @@ public:
 /*
 DECLARETIONS
 */
-void uniqueElements(std::vector<std::string>& vec);
-transition stringToTransition(int i, const std::vector<std::string>& lines);
-int getFirstElement(std::string line);
-void fillStates(std::vector<State> &obj_states, const std::vector<std::string>& alphabet);
-std::vector<std::string> StrToVectStr(std::string str);
+std::vector<std::string> GetLines(std::string name_file);
+std::vector<char> StrToVectChar(std::string str);
 std::vector<int> StrToVectInt(std::string str);
-std::vector<std::string> GetLines(std::string file);//Save all the lines of the document in an arrangement to have better handling on these
-std::vector<std::string> subVectorfromVector(std::vector<std::string> &vector1, const std::vector<std::string> &vector2);
-void printTable(const std::vector<std::string>& alphabet,std::vector<State>& states);
-void travel(std::vector<State>& states, std::vector<std::string>& alphabet,int actual_state, std::string string, std::vector<int> path, std::string original_str, std::vector<int> valid);
+int getFirstElement(std::string line);
+transition stringToTransition(int i, const std::vector<std::string>& lines);
+void fillStates(std::vector<State> &obj_states, const std::vector<char>& alphabet);
+void uniqueElements(std::vector<char>& vec);
+void uniqueElements(std::vector<char>& vec);
+std::vector<char> subVectorfromVector(std::vector<char> &vector1, const std::vector<char> &vector2);
+void printTable(const std::vector<char> &alphabet,std::vector<State>& states);

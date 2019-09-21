@@ -1,6 +1,5 @@
 #include "automata.h"
 
-
 std::ostream& operator<<(std::ostream& stream, const transition& transition){
   stream << transition.event << "," << transition.next_state;
   return stream;
@@ -34,8 +33,8 @@ bool State::getAccepted(){
     return accepted;
 }
 
-std::vector<std::string> State::getEventsOfTransitions(){
-    std::vector<std::string> events;
+std::vector<char> State::getEventsOfTransitions(){
+    std::vector<char> events;
     for(int i = 0; i < transitions.size(); i++){
       events.push_back(transitions[i].event);
     }
@@ -46,7 +45,7 @@ std::vector<transition> State::getTransitions(){
     return transitions;
 }
 
-std::string State::getNextStates(std::string symbol){
+std::string State::getNextState(char symbol){
   std::string next_state;
   for (int i = 0; i < transitions.size(); i++){
     if (transitions[i].event ==symbol){
@@ -62,7 +61,7 @@ std::string State::getNextStates(std::string symbol){
   return next_state;
 }
 
-std::string State::getEventOfTransition(int num_transition){
+char State::getEventOfTransition(int num_transition){
   return transitions[num_transition].event;
 }
 
@@ -85,18 +84,18 @@ std::vector<std::string> GetLines(std::string name_file){
   return Lines;
 }
 
-std::vector<std::string> StrToVectStr(std::string str){
-  std::vector<std::string> vect;
+std::vector<char> StrToVectChar(std::string str){
+  std::vector<char> vect;
   std::string aux;
   for(int i=0; i < str.length(); i++){
     if(str[i]==44){
-      vect.push_back(aux);
+      vect.push_back(aux[0]);
       aux.clear();
     }
     else
       aux += str[i];
   }
-  vect.push_back(aux);
+  vect.push_back(aux[0]);
   aux.clear();
 
   return vect;
@@ -140,22 +139,24 @@ int getFirstElement(std::string line){
 }
 
 transition stringToTransition(int i, const std::vector<std::string>& lines){
-  std::string B,aux;
+  std::string aux;
   aux = lines[i];
+  char B;
   int C;
+
   
   std::stringstream ss(aux);
   getline(ss,aux, ',');
   getline(ss,aux, ',');
-  B=aux;
+  B=aux[0];
   getline(ss,aux, ',');
   C=std::stoi(aux); 
   transition transition_line(B,C);
   return transition_line;
 }
 
-void fillStates(std::vector<State> &obj_states, const std::vector<std::string>& alphabet){
-  std::vector<std::string> events, missing_events;
+void fillStates(std::vector<State> &obj_states, const std::vector<char>& alphabet){
+  std::vector<char> events, missing_events;
   for (int i = 0; i < obj_states.size(); i++){
     events = obj_states[i].getEventsOfTransitions();
     uniqueElements(events);
@@ -166,27 +167,28 @@ void fillStates(std::vector<State> &obj_states, const std::vector<std::string>& 
     }
     
   }
-  
 }
 
-void uniqueElements(std::vector<std::string>& vec){
+void uniqueElements(std::vector<char>& vec){
 vec.erase( unique( vec.begin(), vec.end() ), vec.end() );
-vec.erase(std::remove(vec.begin(), vec.end(), "E"), vec.end());
+vec.erase(std::remove(vec.begin(), vec.end(), 'E'), vec.end());
 }
 
 
-std::vector<std::string> subVectorfromVector(std::vector<std::string> &vector1, const std::vector<std::string> &vector2){
-  std::vector<std::string> vec = vector2;
+std::vector<char> subVectorfromVector(std::vector<char> &vector1, const std::vector<char> &vector2){
+  std::vector<char> vec = vector2;
   for (int i = 0; i < vector1.size(); i++){
    vec.erase(std::remove(vec.begin(), vec.end(), vector1[i]), vec.end()); 
   }
   return vec;
 }
 
-void printTable(const std::vector<std::string>& alphabet,std::vector<State>& states){
+void printTable(const std::vector<char> &alphabet,std::vector<State>& states){
   std::string line ="|\t|";
   for(int i=0; i < alphabet.size(); i++){
-    line += "\t" + alphabet[i] + "\t|";
+    line+= "\t";
+    line+= alphabet[i];
+    line+= "\t|";
   }
   line += "\tε\t|";
   std::cout << line << std::endl;
@@ -200,9 +202,9 @@ void printTable(const std::vector<std::string>& alphabet,std::vector<State>& sta
       line += "*";
     line += "\t|";
     for (int j = 0; j < alphabet.size(); j++){
-      line += "\t" + states[i].getNextStates(alphabet[j]) + "\t|";
+      line += "\t" + states[i].getNextState(alphabet[j]) + "\t|";
     }
-    line += "\t" + states[i].getNextStates("E") + "\t|";
+    line += "\t" + states[i].getNextState('E') + "\t|";
     std::cout << line << std::endl;
   }
 

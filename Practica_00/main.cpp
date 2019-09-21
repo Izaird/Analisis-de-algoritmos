@@ -4,14 +4,15 @@
 
 int main(){
   std::vector<int> states, initial_state, acceptance_states;
-  std::vector<std::string> lines, alphabet;
+  std::vector<std::string> lines;
+  std::vector<char> alphabet;
   std::vector<transition> all_transitions;
   std::vector<State> obj_states;
   std::vector<transition> aux;
   lines = GetLines("inputs/input");
   states = StrToVectInt(lines[0]);
   states.push_back(-1);
-  alphabet = StrToVectStr(lines[1]);
+  alphabet = StrToVectChar(lines[1]);
   initial_state = StrToVectInt(lines[2]);
   acceptance_states = StrToVectInt(lines[3]);
 
