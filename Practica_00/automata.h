@@ -14,11 +14,6 @@ struct transition{
   event = a;
   next_state = b;
   }
-
-  void newVal(transition help){
-    event = help.event;
-    next_state = help.next_state;
-  }
 };
 
 
