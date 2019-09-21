@@ -50,6 +50,5 @@ int getFirstElement(std::string line);
 transition stringToTransition(int i, const std::vector<std::string>& lines);
 void fillStates(std::vector<State> &obj_states, const std::vector<char>& alphabet);
 void uniqueElements(std::vector<char>& vec);
-void uniqueElements(std::vector<char>& vec);
 std::vector<char> subVectorfromVector(std::vector<char> &vector1, const std::vector<char> &vector2);
 void printTable(const std::vector<char> &alphabet,std::vector<State>& states);
