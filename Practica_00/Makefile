@@ -1,4 +1,4 @@
-CFLAGS = -O
+CFLAGS = -O0
 CC = g++
 NumTest: main.o automata.o
 	$(CC) $(CFLAGS) -o main main.o automata.o -g

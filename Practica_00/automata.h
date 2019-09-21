@@ -14,6 +14,11 @@ struct transition{
   event = a;
   next_state = b;
   }
+
+  void newVal(transition help){
+    event = help.event;
+    next_state = help.next_state;
+  }
 };
 
 
@@ -52,3 +57,7 @@ void fillStates(std::vector<State> &obj_states, const std::vector<char>& alphabe
 void uniqueElements(std::vector<char>& vec);
 std::vector<char> subVectorfromVector(std::vector<char> &vector1, const std::vector<char> &vector2);
 void printTable(const std::vector<char> &alphabet,std::vector<State>& states);
+void travel(std::vector<State>& states, std::vector<char>& alphabet,int actual_state, std::string string, std::vector<int> path, std::string original_str, std::vector<int> valid);
+void showPath(std::vector<int> path);
+int getNumberOfInitialState(std::vector<State> &states);//return the array number in which initial state is stored
+int getNumberOfState(std::vector<State> &states, int state);//return the number of the arrangement in which the status is stored

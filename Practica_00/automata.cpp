@@ -85,20 +85,13 @@ std::vector<std::string> GetLines(std::string name_file){
 }
 
 std::vector<char> StrToVectChar(std::string str){
-  std::vector<char> vect;
-  std::string aux;
-  for(int i=0; i < str.length(); i++){
-    if(str[i]==44){
-      vect.push_back(aux[0]);
-      aux.clear();
+  std::vector<char> vec(str.begin(), str.end());
+  for (int i = 0; i < vec.size(); i++){
+    if(vec[i] == 44){
+      vec.erase(vec.begin() + i);
     }
-    else
-      aux += str[i];
   }
-  vect.push_back(aux[0]);
-  aux.clear();
-
-  return vect;
+  return vec;
 }
 
 std::vector<int> StrToVectInt(std::string str){
@@ -143,14 +136,12 @@ transition stringToTransition(int i, const std::vector<std::string>& lines){
   aux = lines[i];
   char B;
   int C;
-
-  
   std::stringstream ss(aux);
   getline(ss,aux, ',');
   getline(ss,aux, ',');
   B=aux[0];
   getline(ss,aux, ',');
-  C=std::stoi(aux); 
+  C=std::stoi(aux);
   transition transition_line(B,C);
   return transition_line;
 }
@@ -211,32 +202,24 @@ void printTable(const std::vector<char> &alphabet,std::vector<State>& states){
 }
 
 
-// void travel(std::vector<State>& states, std::vector<std::string>& alphabet,int actual_state, std::string string, std::vector<int> path, std::string original_str, std::vector<int> valid){
-//   std::vector<int> temp_path = path;
-//   if (states[actual_state].getNumber()!= -1){
-//     if(string.empty()){
-//       if(states[actual_state].getAccepted()){
-//         valid.push_back(1);
-//         temp_path = path;
-//         temp_path.push_back(states[actual_state].getNumber());
-//       }
-//     }
-//     else{
-//       if(std::find(alphabet.begin(), alphabet.end(), string[0])!=alphabet.end() == false){
-//         temp_path = path;
-//         temp_path.push_back(-2);
-//         travel(states, alphabet, actual_state, string.substr(1),temp_path, original_str, valid);
-//       }
-//       else{
-//         std::string temp_string = string;
-//         for(int i = 0; i < states[actual_state].numberOfTransitions(); i++){
-//           if(states[actual_state].getEventOfTransition(i)[0] == string[0]){
-//             temp_path = path;
-//             temp_path.push_back(actual_state);  
-//             travel(states, alphabet, states[actual_state].getNextStateOfTransition(i), temp_string.substr(1),temp_path, original_str, valid);
-//           }
-//         }
-//       }
-//     }
-//   }
-// }
+int getNumberOfInitialState(std::vector<State> &states){
+  int aux =1, i =0, number;
+  do{
+    if(states[i].getInitial()){
+      number = i;
+      aux = false;
+    }
+  } while (aux);
+  return number;
+}
+
+int getNumberOfState(std::vector<State> &states, int state){
+  int aux =1, i =0, number;
+  do{
+    if(states[i].getNumber() == state){
+      number = i;
+      aux = false;
+    }
+  } while (aux);
+  return number;
+}
