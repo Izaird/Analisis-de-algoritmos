@@ -142,7 +142,7 @@ transition stringToTransition(int i, const std::vector<std::string>& lines){
   B=aux[0];
   getline(ss,aux, ',');
   C=std::stoi(aux);
-  transition transition_line(B,C);
+  transition transition_line({B,C});
   return transition_line;
 }
 
@@ -153,7 +153,7 @@ void fillStates(std::vector<State> &obj_states, const std::vector<char>& alphabe
     uniqueElements(events);
     missing_events = subVectorfromVector(events,alphabet);
     for (int j = 0; j < missing_events.size(); j++){
-      transition transition_1(missing_events[j],-1);
+      transition transition_1({missing_events[j],-1});
       obj_states[i].setTransition(transition_1);
     }
     
@@ -209,17 +209,20 @@ int getNumberOfInitialState(std::vector<State> &states){
       number = i;
       aux = false;
     }
+    i++;
   } while (aux);
   return number;
 }
 
 int getNumberOfState(std::vector<State> &states, int state){
-  int aux =1, i =0, number;
+  bool aux = true;
+  int i =0, number;
   do{
     if(states[i].getNumber() == state){
       number = i;
       aux = false;
     }
+    i++;
   } while (aux);
   return number;
 }

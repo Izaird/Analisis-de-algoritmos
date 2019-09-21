@@ -9,11 +9,6 @@
 struct transition{
   char event;  
   int next_state;
-
-  transition(char a, int b){
-  event = a;
-  next_state = b;
-  }
 };
 
 

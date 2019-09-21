@@ -3,44 +3,48 @@
 
 
 int main(){
-  std::vector<int> states_str, initial_state, acceptance_states;
+  std::vector<int> states_doc, initial_state, acceptance_states;
   std::vector<std::string> lines;
   std::vector<char> alphabet;
-  std::vector<transition> all_transitions;
+  std::vector<transition> transitions_doc;
   std::vector<State> states;
   std::vector<transition> aux;
   lines = GetLines("inputs/input");
-  states_str = StrToVectInt(lines[0]);
-  states_str.push_back(-1);
+  states_doc = StrToVectInt(lines[0]);
+  states_doc.push_back(-1);
   alphabet = StrToVectChar(lines[1]);
   initial_state = StrToVectInt(lines[2]);
   acceptance_states = StrToVectInt(lines[3]);
 
 
-  for(int i=0; i<states_str.size(); i++){
+  for(int i=0; i<states_doc.size(); i++){
     bool initial, final;
-    if(std::find(initial_state.begin(), initial_state.end(), states_str[i]) != initial_state.end())
+    if(std::find(initial_state.begin(), initial_state.end(), states_doc[i]) != initial_state.end())
       initial = true;
     else
       initial = false;   
 
-    if(std::find(acceptance_states.begin(), acceptance_states.end(), states_str[i]) != acceptance_states.end())
+    if(std::find(acceptance_states.begin(), acceptance_states.end(), states_doc[i]) != acceptance_states.end())
       final = true;
     else
       final = false;
   State state;
-  state.setState(states_str[i],initial,final);
+  state.setState(states_doc[i],initial,final);
   states.push_back(state);
   }
 
   for(int i=4; i < lines.size(); i++){
     bool found = true;
     std::string event;
-    transition aux();
+    transition aux;
+    int aux2;
     int j=0, next_state=0;
       while(found){
         if(getFirstElement(lines[i]) == states[j].getNumber()){
-          states[j].setTransition(stringToTransition(i,lines));
+          aux = stringToTransition(i,lines);
+          aux2 = getNumberOfState(states, aux.next_state);
+          aux.next_state = aux2;
+          states[j].setTransition(aux);
           j=0;
           found =false;
         }
