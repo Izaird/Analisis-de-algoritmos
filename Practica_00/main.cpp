@@ -8,7 +8,7 @@ int main(){
   std::vector<transition> all_transitions;
   std::vector<State> obj_states;
   std::vector<transition> aux;
-  lines = GetLines("inputs/input3");
+  lines = GetLines("inputs/input");
   states = StrToVectInt(lines[0]);
   states.push_back(-1);
   alphabet = StrToVectStr(lines[1]);

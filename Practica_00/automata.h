@@ -34,7 +34,9 @@ public:
   std::vector<std::string> getEventsOfTransitions();
   std::vector<transition> getTransitions();
   int numberOfTransitions();
+  std::string getEventOfTransition(int transition);
   std::string getNextStates(std::string symbol);
+  int getNextStateOfTransition(int num_transition);
 };
 
 
@@ -50,3 +52,4 @@ std::vector<int> StrToVectInt(std::string str);
 std::vector<std::string> GetLines(std::string file);//Save all the lines of the document in an arrangement to have better handling on these
 std::vector<std::string> subVectorfromVector(std::vector<std::string> &vector1, const std::vector<std::string> &vector2);
 void printTable(const std::vector<std::string>& alphabet,std::vector<State>& states);
+void travel(std::vector<State>& states, std::vector<std::string>& alphabet,int actual_state, std::string string, std::vector<int> path, std::string original_str, std::vector<int> valid);

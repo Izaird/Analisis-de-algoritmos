@@ -62,9 +62,17 @@ std::string State::getNextStates(std::string symbol){
   return next_state;
 }
 
+std::string State::getEventOfTransition(int num_transition){
+  return transitions[num_transition].event;
+}
+
+int State::getNextStateOfTransition(int num_transition){
+  return transitions[num_transition].next_state;
+}
 /*
 DEFINITIONS
 */ 
+
 std::vector<std::string> GetLines(std::string name_file){
   std::vector<std::string> Lines;
   std::string line;
@@ -199,3 +207,34 @@ void printTable(const std::vector<std::string>& alphabet,std::vector<State>& sta
   }
 
 }
+
+
+// void travel(std::vector<State>& states, std::vector<std::string>& alphabet,int actual_state, std::string string, std::vector<int> path, std::string original_str, std::vector<int> valid){
+//   std::vector<int> temp_path = path;
+//   if (states[actual_state].getNumber()!= -1){
+//     if(string.empty()){
+//       if(states[actual_state].getAccepted()){
+//         valid.push_back(1);
+//         temp_path = path;
+//         temp_path.push_back(states[actual_state].getNumber());
+//       }
+//     }
+//     else{
+//       if(std::find(alphabet.begin(), alphabet.end(), string[0])!=alphabet.end() == false){
+//         temp_path = path;
+//         temp_path.push_back(-2);
+//         travel(states, alphabet, actual_state, string.substr(1),temp_path, original_str, valid);
+//       }
+//       else{
+//         std::string temp_string = string;
+//         for(int i = 0; i < states[actual_state].numberOfTransitions(); i++){
+//           if(states[actual_state].getEventOfTransition(i)[0] == string[0]){
+//             temp_path = path;
+//             temp_path.push_back(actual_state);  
+//             travel(states, alphabet, states[actual_state].getNextStateOfTransition(i), temp_string.substr(1),temp_path, original_str, valid);
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
