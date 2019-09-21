@@ -46,6 +46,21 @@ std::vector<transition> State::getTransitions(){
     return transitions;
 }
 
+std::string State::getNextStates(std::string symbol){
+  std::string next_state;
+  for (int i = 0; i < transitions.size(); i++){
+    if (transitions[i].event ==symbol){
+      if(next_state.empty()){
+        next_state += std::to_string(transitions[i].next_state);
+      }
+      else{
+        next_state += ", " ;
+        next_state += std::to_string(transitions[i].next_state);
+      } 
+    } 
+  }
+  return next_state;
+}
 
 /*
 DEFINITIONS
@@ -162,7 +177,6 @@ std::vector<std::string> subVectorfromVector(std::vector<std::string> &vector1, 
 
 void printTable(const std::vector<std::string>& alphabet,std::vector<State>& states){
   std::string line ="|\t|";
-  std::vector<transition> transitions;
   for(int i=0; i < alphabet.size(); i++){
     line += "\t" + alphabet[i] + "\t|";
   }
@@ -176,10 +190,11 @@ void printTable(const std::vector<std::string>& alphabet,std::vector<State>& sta
     line += std::to_string(states[i].getNumber());
     if(states[i].getAccepted())
       line += "*";
-    line += "\t|\t";
-    transitions = states[i].getTransitions();
-    
-
+    line += "\t|";
+    for (int j = 0; j < alphabet.size(); j++){
+      line += "\t" + states[i].getNextStates(alphabet[j]) + "\t|";
+    }
+    line += "\t" + states[i].getNextStates("E") + "\t|";
     std::cout << line << std::endl;
   }
 

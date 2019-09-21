@@ -34,6 +34,7 @@ public:
   std::vector<std::string> getEventsOfTransitions();
   std::vector<transition> getTransitions();
   int numberOfTransitions();
+  std::string getNextStates(std::string symbol);
 };
 
 
