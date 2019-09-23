@@ -7,7 +7,7 @@ State::State(int a, bool b, bool c){
     acceptance = c;
 }
 
-void State::addTransition(Transition transition){
+void State::pushTransition(Transition transition){
     transitions.push_back(transition);
 }
 
@@ -38,6 +38,14 @@ int State::getNextState(char event){
         i++;
     }while(run);
     return aux;
+}
+
+std::vector<char> State::getEventsOfTransitions(){
+    std::vector<char> events;
+    for(int i = 0; i < transitions.size(); i++){
+      events.push_back(transitions[i].event);
+    }
+    return events;
 }
 
 std::vector<std::string> GetLines(std::string name_file){
@@ -80,10 +88,31 @@ std::vector<char> strToVecChar(std::string str){
   return vec;
 }
 
+Transition strToTransition(std::string string){
+    int next_state;
+    bool direction;
+    char event, new_event;
+    std::stringstream ss(string);
+    getline(ss,string, ',');
+    getline(ss,string, ',');
+    event=string[0];
+    getline(ss,string, ',');
+    new_event=string[0];
+    getline(ss,string, ',');
+    if(string[0]=='l'||string[0]=='L')
+        direction = false;
+    else if(string[0]=='r'||string[0]=='R')
+        direction = true;
+    getline(ss,string, ',');
+    next_state = std::stoi(string);    
+    Transition transition({event,new_event,direction,next_state});
+    return transition;
+}
+
 std::vector<State> createStates(){
     std::vector<std::string> lines;
     std::vector<int> states_doc, aux;
-    std::vector<char> alphabet;
+    std::vector<char> alphabet, alphabet_input, full_alphabet;
     std::vector<Transition> transitions_doc;
     std::vector<State> states;
     int initial_state, acceptance_state;
@@ -91,7 +120,11 @@ std::vector<State> createStates(){
     states_doc = strToVecInt(lines[0]);
     states_doc.push_back(-1);
     alphabet = strToVecChar(lines[1]);
-    aux = strToVecInt(lines[2]);
+    alphabet_input = strToVecChar(lines[2]);
+    full_alphabet = alphabet;
+    full_alphabet.insert( full_alphabet.end(), alphabet_input.begin(), alphabet_input.end() );
+    full_alphabet.push_back('_');
+    aux = strToVecInt(lines[3]);
     if(aux.size()==1)
         initial_state = aux[0];
     else{
@@ -99,15 +132,13 @@ std::vector<State> createStates(){
     exit;    
     }
     aux.clear();
-    aux = strToVecInt(lines[3]);
+    aux = strToVecInt(lines[4]);
     if(aux.size()==1)
         acceptance_state = aux[0];
     else{
     std::cout << FRED("There can only be one acceptance state.") << std::endl;
     exit;
     }
-
-
     for(int i=0; i<states_doc.size(); i++){
         bool initial, final;
         if(initial_state == states_doc[i])
@@ -122,5 +153,70 @@ std::vector<State> createStates(){
         State state(states_doc[i],initial,final);
         states.push_back(state);
     }
+
+    for(int i=5; i < lines.size(); i++){
+    bool found = true;
+    std::string event;
+    Transition aux;
+    int aux2;
+    int j=0, next_state=0;
+      while(found){
+        if(getFirstElement(lines[i]) == states[j].getNumber()){
+          aux = strToTransition(lines[i]);
+          aux2 = getNumberOfState(states, aux.next_state);
+          aux.next_state = aux2;
+          states[j].pushTransition(aux);
+          j=0;
+          found =false;
+        }
+        else
+          j++;
+      }
+  }
+    fillStates(states,full_alphabet);
+
     return states;
+}
+
+
+int getNumberOfState(std::vector<State> &states, int state){
+  bool aux = true;
+  int i =0, number;
+  do{
+    if(states[i].getNumber() == state){
+      number = i;
+      aux = false;
+    }
+    i++;
+  } while (aux);
+  return number;
+}
+
+void fillStates(std::vector<State> &states, const std::vector<char>& alphabet){
+    std::vector<char> events, missing_events;
+    for (int i = 0; i < states.size(); i++){
+    events = states[i].getEventsOfTransitions();
+    missing_events = vecMinusVec(events,alphabet);
+    for (int j = 0; j < missing_events.size(); j++){
+        Transition transition_1({missing_events[j],'*',false,-1});
+        states[i].pushTransition(transition_1);
+    }
+    }
+}
+
+std::vector<char> vecMinusVec(std::vector<char> &vector1, const std::vector<char> &vector2){
+    std::vector<char> vec = vector2;
+    for (int i = 0; i < vector1.size(); i++){
+    vec.erase(std::remove(vec.begin(), vec.end(), vector1[i]), vec.end()); 
+    }
+    return vec;
+}
+
+
+int getFirstElement(std::string line){
+    int x;
+    std::stringstream ss(line);
+    getline(ss,line, ',');
+    x = std::stoi(line);
+    return x;
 }
