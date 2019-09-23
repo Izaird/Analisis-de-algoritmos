@@ -1,7 +1,5 @@
 #include "automata.h"
 
-
-
 int main(){
   std::vector<int> states_doc, initial_state, acceptance_states;
   std::vector<std::string> lines;
