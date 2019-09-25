@@ -286,6 +286,4 @@ std::vector<char> getString(){
         }
     }
 
-    
-
 }
