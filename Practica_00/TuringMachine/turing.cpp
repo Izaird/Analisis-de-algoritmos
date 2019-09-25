@@ -40,6 +40,42 @@ int State::getNextState(char event){
     return aux;
 }
 
+Tape::Tape(std::vector<char> a){
+    tape = a;
+    tape_head = 1;
+}
+
+char Tape::read(){
+    char event;
+    event = tape[tape_head];
+    return event;
+}
+
+void Tape::update(char new_event){
+    tape[tape_head] = new_event;
+}
+
+void Tape::move(bool direction){
+    if(direction){//True, move the tape_head one step RIGHT 
+        if((tape.size()-1)==tape_head){//It means that we are at the end of the tape and we need to add a blank space
+            tape.push_back('_');// and then move the tape_head
+            tape_head++;
+        }
+        else
+            tape_head++;
+    }
+    else{//False, move the tape_head one step LEFT
+        if(tape_head == 0){
+            tape.insert(tape.begin(), '_');//It means that we are at the begining of the tape and we need to add a blank space
+            tape_head++;// and then move the tape_head
+        }
+        else
+            tape_head--;
+
+    }
+}
+
+
 std::vector<char> State::getEventsOfTransitions(){
     std::vector<char> events;
     for(int i = 0; i < transitions.size(); i++){
@@ -212,11 +248,44 @@ std::vector<char> vecMinusVec(std::vector<char> &vector1, const std::vector<char
     return vec;
 }
 
-
 int getFirstElement(std::string line){
     int x;
     std::stringstream ss(line);
     getline(ss,line, ',');
     x = std::stoi(line);
     return x;
+}
+
+std::vector<char> getString(){
+    int count = 0;
+    std::vector<std::string> lines;
+    std::vector<char> alphabet;
+    std::string string;
+    lines = GetLines("inputs/input");
+    alphabet = strToVecChar(lines[1]);
+    std::cin >> string;
+    for (int i = 0; i < alphabet.size(); i++){
+        size_t n = std::count(string.begin(), string.end(), alphabet[i]);
+        count += n;
+    }
+
+    if(count == string.size()){//We need to verify if the string is composed of valid characters
+        if(string.size() == 1 && string[0] == '_'){//It's an empty tape
+            std::vector<char> tape;
+            tape.push_back('_');
+            tape.push_back('_');
+            tape.push_back('_');
+            return tape;
+        }
+
+        else{
+            std::vector<char> tape(string.begin(), string.end());
+            tape.push_back('_');
+            tape.insert(tape.begin(),'_');
+            return tape;
+        }
+    }
+
+    
+
 }

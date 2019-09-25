@@ -28,6 +28,17 @@ public:
 
 };
 
+class Tape{
+private:
+    std::vector<char> tape;
+    int tape_head;
+public:
+    Tape(std::vector<char> a);
+    char read();
+    void update(char new_event);
+    void move(bool direction);
+};
+
 std::vector<State> createStates();
 std::vector<std::string> GetLines(std::string name_file);
 std::vector<int> strToVecInt(std::string str);
@@ -37,3 +48,4 @@ std::vector<char> vecMinusVec(std::vector<char> &vector1, const std::vector<char
 int getNumberOfState(std::vector<State> &states, int state);
 void fillStates(std::vector<State> &states, const std::vector<char>& alphabet);
 int getFirstElement(std::string line);
+std::vector<char> getString();
