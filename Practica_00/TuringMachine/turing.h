@@ -23,8 +23,12 @@ public:
     bool getInitial();
     bool getAcceptance();
     std::vector<Transition> getTransitions();
-    int getNextState(char event);
     std::vector<char> getEventsOfTransitions();
+    Transition getTransition(char event);
+    char getNewEvent(char event);
+    bool getDirection(char event);
+    int getNextState(char event);
+
 
 };
 
@@ -49,3 +53,4 @@ int getNumberOfState(std::vector<State> &states, int state);
 void fillStates(std::vector<State> &states, const std::vector<char>& alphabet);
 int getFirstElement(std::string line);
 std::vector<char> getString();
+int getInitialState(std::vector<State> &states);//Return the 

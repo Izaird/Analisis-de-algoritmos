@@ -27,17 +27,34 @@ std::vector<Transition> State::getTransitions(){
     return transitions;
 }
 
-int State::getNextState(char event){
-    bool run = true;
-    int i=0, aux;
-    do{
-        if(transitions[i].event ==event){
-            run = false;
-            aux = transitions[i].next_state;
+Transition State::getTransition(char event){
+    Transition transition;
+    for (int i = 0; i < transitions.size(); i++){
+        if(transitions[i].event == event){
+            transition = transitions[i];
+            break; //End the loop
         }
-        i++;
-    }while(run);
-    return aux;
+    }
+    return transition;
+}
+
+char State::getNewEvent(char event){
+    Transition transition;
+    transition = getTransition(event);
+    return transition.new_event;
+}
+
+bool State::getDirection(char event){
+    Transition transition;
+    transition = getTransition(event);
+    return transition.direction;
+}
+
+
+int State::getNextState(char event){
+    Transition transition;
+    transition = getTransition(event);
+    return transition.next_state;
 }
 
 Tape::Tape(std::vector<char> a){
@@ -257,33 +274,48 @@ int getFirstElement(std::string line){
 }
 
 std::vector<char> getString(){
-    int count = 0;
-    std::vector<std::string> lines;
-    std::vector<char> alphabet;
+    bool run = true;
+    int count=0;
+    std::vector<char> tape, alphabet;
     std::string string;
+    std::vector<std::string> lines;
     lines = GetLines("inputs/input");
     alphabet = strToVecChar(lines[1]);
-    std::cin >> string;
-    for (int i = 0; i < alphabet.size(); i++){
-        size_t n = std::count(string.begin(), string.end(), alphabet[i]);
-        count += n;
-    }
 
-    if(count == string.size()){//We need to verify if the string is composed of valid characters
-        if(string.size() == 1 && string[0] == '_'){//It's an empty tape
-            std::vector<char> tape;
+
+    do{
+        std::cin >> string;
+        if(string.size()==1 && string[0]=='_'){
+            tape.insert(tape.begin(),3,'_');
+            break;
+        }
+
+        for (int i = 0; i < alphabet.size(); i++){
+            size_t n = std::count(string.begin(), string.end(), alphabet[i]);
+            count += n;
+        }
+
+        if(count == string.size()){//We need to verify if the string is composed of valid characters
+            std::copy(string.begin(),string.end(), std::back_inserter(tape));
             tape.push_back('_');
-            tape.push_back('_');
-            tape.push_back('_');
-            return tape;
+            tape.insert(tape.begin(),'_');
+            break;
         }
 
         else{
-            std::vector<char> tape(string.begin(), string.end());
-            tape.push_back('_');
-            tape.insert(tape.begin(),'_');
-            return tape;
+            std::cout<< FRED("String not accepted, try again") << std::endl;          
+            count = 0;
         }
-    }
 
+
+    }while(run);
+    return tape;
+}
+
+int getInitialState(std::vector<State> &states){
+    int i;
+    for (i = 0; i < states.size(); i++)
+        if(states[i].getInitial())
+            break;
+    return i;
 }
