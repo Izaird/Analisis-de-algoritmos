@@ -67,6 +67,26 @@ std::string Tape::print(){
     return string;
 }
 
+TruthTable::TruthTable(){}
+
+void TruthTable::fill(int rule){
+    do{
+        if(rule>255 || rule<0){
+            std::cout << "Only 0 to 255" <<std::endl;
+            std::cout << "try again:" <<std::endl;
+            std::cin >> rule;
+        }
+        else
+            break;
+    }while(true);
+    std::bitset<8> binary = std::bitset<8>(rule); //to binary
+    for(int i=0; i<8; i++){
+        if (binary[i])
+            cases[i] = 1;
+        else
+            cases[i] = 0;
+    }
+}
 
 void writeDoc(std::string s, std::fstream &myfile){
     myfile << s << std::endl;

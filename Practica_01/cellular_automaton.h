@@ -2,6 +2,8 @@
 #include <vector>
 #include <random>
 #include <fstream> 
+#include <bitset>
+
 
 class Tape{//Class to store the bit string
 private:
@@ -16,5 +18,12 @@ public:
     std::string print();
 };
 
+class TruthTable{
+private:
+    bool cases[8];
+public:
+    TruthTable();
+    void fill(int rule);
+};
 
 void writeDoc(std::string s, std::fstream &myfile);
