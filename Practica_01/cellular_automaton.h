@@ -11,11 +11,12 @@ private:
     int tape_head;
 public:
     Tape();
-    std::vector<bool> read();//return an array with the tape_head element, the previous and the next element
-    void update(bool new_element);
+    int read();//return an array with the tape_head element, the previous and the next element
+    void update(std::vector<bool> &new_tape);
     void move();//move the tape_head one spot
     void fill(int size);//It's gonna fill the vector with random numbers 
     std::string print();
+    int size();
 };
 
 class TruthTable{
@@ -24,6 +25,8 @@ private:
 public:
     TruthTable();
     void fill(int rule);
+    bool getCase(int a);
+
 };
 
 void writeDoc(std::string s, std::fstream &myfile);

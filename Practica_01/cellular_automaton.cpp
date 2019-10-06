@@ -5,8 +5,9 @@ Tape::Tape(){
     tape.clear();
 }
 
-std::vector<bool> Tape::read(){
+int Tape::read(){
     std::vector<bool> a;
+    int aux;
     if(tape_head == 0){//the tape it's like a torid 
         a.push_back(tape[tape.size()-1]);
         a.push_back(tape[0]);
@@ -22,11 +23,13 @@ std::vector<bool> Tape::read(){
         a.push_back(tape[tape_head]);
         a.push_back(tape[tape_head+1]);
     }
-    return a;
+
+    aux = a[0]*4 + a[1]*2 + a[2];
+    return aux;
 }
 
-void Tape::update(bool new_element){
-    tape[tape_head]=new_element;
+void Tape::update(std::vector<bool> &new_tape){
+    tape=new_tape;
 }
 
 void Tape::move(){
@@ -60,11 +63,15 @@ std::string Tape::print(){
     std::string string;
     for(std::vector<bool>::iterator iter = tape.begin(); iter != tape.end(); ++iter){
         if(*iter)
-            string += '#';
+            string += "\u25A0";
         else
             string += ' ';
     }
     return string;
+}
+
+int Tape::size(){
+    return tape.size();
 }
 
 TruthTable::TruthTable(){}
@@ -79,13 +86,17 @@ void TruthTable::fill(int rule){
         else
             break;
     }while(true);
-    std::bitset<8> binary = std::bitset<8>(rule); //to binary
+    std::string binary = std::bitset<8>(rule).to_string(); //to binary
     for(int i=0; i<8; i++){
-        if (binary[i])
+        if (binary[7-i] == '1')
             cases[i] = 1;
         else
             cases[i] = 0;
     }
+}
+
+bool TruthTable::getCase(int a){
+    return cases[a];
 }
 
 void writeDoc(std::string s, std::fstream &myfile){
