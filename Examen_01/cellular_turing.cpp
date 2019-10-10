@@ -60,13 +60,29 @@ void CellularTape::fill(int size){
             tape.push_back( d(gen));
 }
 
+void CellularTape::fillOneBit(int size){
+    for (int i = 0; i < size; i++)
+        tape.push_back(0);
+    int aux = size/2;
+    tape.at(aux) = 1;
+}
+
+void CellularTape::fillStr(std::string string){
+    for (int i = 0; i < string.size(); i++){
+        if(string[i]=='1')
+            tape.push_back(1);
+        else
+            tape.push_back(0);
+    }
+    
+}
 std::string CellularTape::print(){
     std::string string;
     for(std::vector<bool>::iterator iter = tape.begin(); iter != tape.end(); ++iter){
         if(*iter)
-            string += "\u25A0";
+            string += '1';
         else
-            string += ' ';
+            string += '0';
     }
     return string;
 }
@@ -95,6 +111,7 @@ void TruthTable::fill(int rule){
             cases[i] = 0;
     }
 }
+
 
 bool TruthTable::getCase(int a){
     return cases[a];
@@ -148,7 +165,6 @@ bool State::getDirection(char event){
     transition = getTransition(event);
     return transition.direction;
 }
-
 
 int State::getNextState(char event){
     Transition transition;
@@ -416,4 +432,8 @@ int getInitialState(std::vector<State> &states){
         if(states[i].getInitial())
             break;
     return i;
+}
+
+void writeDoc(std::string s, std::fstream &myfile){
+    myfile << s << std::endl;
 }

@@ -21,24 +21,38 @@ private:
     int tape_head;
 public:
     CellularTape();
-    int read();//return an array with the tape_head element, the previous and the next element
+    //return an array with the tape_head element, the previous and the next element
+    int read();
+    //Changes the symbol of the current tape head
     void update(std::vector<bool> &new_tape);
-    void move();//move the tape_head one spot
-    void fill(int size);//It's gonna fill the vector with random numbers 
+    //move the tape_head one spot
+    void move();
+    //Fill the vector with random numbers
+    void fill(int size);
+    //Fill the vector only with 1 bit at the center of the vector
+    void fillOneBit(int size);
+    //Fill the vector with a string 
+    void fillStr(std::string string);
+    //Return the tape as a string
     std::string print();
+    //return the size of the tape
     int size();
 };
 
+//Class Truth table
 class TruthTable{
 private:
     bool cases[8];
 public:
+    //Constructor of the class
     TruthTable();
+    //Fill the truth table with the respective rule
     void fill(int rule);
+    //Return the case of the truth table
     bool getCase(int a);
-
 };
 
+//Class to store all the states of the turing machine
 class State{
 private:
     bool initial, acceptance;
@@ -60,6 +74,7 @@ public:
 
 };
 
+//Class to store the turing tape 
 class TuringTape{
 private:
     std::vector<char> tape;
