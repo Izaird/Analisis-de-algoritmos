@@ -4,3 +4,7 @@ Practica_00/DFA/*.o
 Practica_00/DFA/DFA
 Practica_01/output.txt
 Practica_01/output
+Examen_01/TuringMachine/*.o
+Examen_01/TuringMachine/turing_machine
+Examen_01/CellularAutomata/*.o
+Examen_01/CellularAutomata/cellular_automaton
