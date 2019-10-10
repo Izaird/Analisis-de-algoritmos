@@ -3,6 +3,14 @@
 #include <algorithm>
 #include <fstream>
 #include <sstream>
+#include <sys/ipc.h> 
+#include <sys/msg.h>
+
+struct mesg_buffer{ 
+    long mesg_type; 
+    char mesg_text[100]; 
+}; 
+  
 
 struct Transition{
     char event;
@@ -54,3 +62,7 @@ void fillStates(std::vector<State> &states, const std::vector<char>& alphabet);
 int getFirstElement(std::string line);
 std::vector<char> getString();
 int getInitialState(std::vector<State> &states);//Return the 
+void travel_r(int actual_state, int next_state, char tape_actual_char, Tape &tape, std::vector<State> &states);
+void travel(int actual_state, int next_state, char tape_actual_char, Tape &tape, std::vector<State> &states);
+void sendMessage();
+void rcvMessage();

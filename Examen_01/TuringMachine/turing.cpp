@@ -319,3 +319,41 @@ int getInitialState(std::vector<State> &states){
             break;
     return i;
 }
+
+
+void sendMessage(){
+    key_t key; 
+    int msgid; 
+    mesg_buffer message;
+    // ftok to generate unique key 
+    key = ftok("progfile", 65); 
+    // msgget creates a message queue 
+    // and returns identifier 
+    msgid = msgget(key, 0666 | IPC_CREAT); 
+    message.mesg_type = 1; 
+    printf("Write Data : "); 
+    std::cin >> (message.mesg_text); 
+    // msgsnd to send message 
+    msgsnd(msgid, &message, sizeof(message), 0); 
+    // display the message 
+    std::cout << "Data send is :" << message.mesg_text<< std::endl; 
+    // to destroy the message queue 
+    msgctl(msgid, IPC_RMID, NULL); 
+}
+
+void rcvMessage(){
+    key_t key; 
+    int msgid; 
+    mesg_buffer message;
+    // ftok to generate unique key 
+    key = ftok("progfile", 65); 
+    // msgget creates a message queue 
+    // and returns identifier 
+    msgid = msgget(key, 0666 | IPC_CREAT); 
+    // msgrcv to receive message 
+    msgrcv(msgid, &message, sizeof(message), 1, 0); 
+    // display the message 
+    std::cout << "Data Received is" << message.mesg_text << std::endl;
+    // to destroy the message queue 
+    msgctl(msgid, IPC_RMID, NULL); 
+}
