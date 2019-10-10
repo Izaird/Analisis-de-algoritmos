@@ -1,0 +1,23 @@
+#a^n b^n
+#States
+0,1,2,3,4
+#Alphabet
+a,b
+#Input alphabet
+x
+#Initial state
+0
+#Acceptance state
+3
+#transitions
+0,a,_,R,1
+0,_,_,L,3
+0,x,x,R,4
+1,x,x,R,1
+1,a,a,R,1
+1,b,x,L,2
+2,a,a,L,2
+2,x,x,L,2
+2,_,_,R,0
+4,x,x,R,4
+4,_,_,L,3
