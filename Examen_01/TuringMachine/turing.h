@@ -53,7 +53,7 @@ std::vector<char> vecMinusVec(std::vector<char> &vector1, const std::vector<char
 int getNumberOfState(std::vector<State> &states, int state);
 void fillStates(std::vector<State> &states, const std::vector<char>& alphabet);
 int getFirstElement(std::string line);
-std::vector<char> getString();
+std::vector<char> getString(std::string string);
 int getInitialState(std::vector<State> &states);//Return the 
 void travel_r(int actual_state, int next_state, char tape_actual_char, Tape &tape, std::vector<State> &states);
 void travel(int actual_state, int next_state, char tape_actual_char, Tape &tape, std::vector<State> &states);

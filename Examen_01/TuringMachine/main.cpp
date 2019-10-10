@@ -3,17 +3,18 @@
 
 int main(){
     std::vector<State> states;
+    std::string string;
     // std::vector<char> test= {'_','a','a','a','b','b','b','_'};
     char event, tape_actual_char;
     int actual_state, next_state;
-
     states= createStates();
     std::cout << FGRN("Insert the tape: ") << std::endl;
-    Tape tape(getString());
+    std::cin >> string;
 
     actual_state = getInitialState(states);
 
     // travel_r(actual_state,next_state,tape_actual_char,tape,states);
+    Tape tape(getString(string));
     travel(actual_state,next_state,tape_actual_char,tape,states);
 
 
