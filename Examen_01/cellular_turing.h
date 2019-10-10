@@ -60,12 +60,12 @@ public:
 
 };
 
-class Tape{
+class TuringTape{
 private:
     std::vector<char> tape;
     int tape_head;
 public:
-    Tape(std::vector<char> a);
+    TuringTape(std::vector<char> a);
     char read();
     void update(char new_event);
     void move(bool direction);
