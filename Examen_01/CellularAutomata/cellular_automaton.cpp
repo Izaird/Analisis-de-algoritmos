@@ -59,24 +59,13 @@ void Tape::fill(int size){
             tape.push_back( d(gen));
 }
 
-void Tape::fillStr(std::string string){
-    tape.clear();
-    for(int i=0; i < string.size(); i++){
-        if(string[i] == '1')
-            tape.push_back(1);
-        else
-            tape.push_back(0);
-    }
-}
-
-
 std::string Tape::print(){
     std::string string;
     for(std::vector<bool>::iterator iter = tape.begin(); iter != tape.end(); ++iter){
         if(*iter)
-            string += '1';
+            string += "\u25A0";
         else
-            string += '0';
+            string += ' ';
     }
     return string;
 }
