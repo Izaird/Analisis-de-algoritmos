@@ -35,6 +35,12 @@ int main(int argc, char const *argv[]){
     tape_c.fillOneBit(size_of_L);
     cellular_answer = runCellular(tape_c,table,rule,repetitions,myfile);
     std::cout << cellular_answer << std::endl;
+    
+    do{
+        
+    }while(true);
+    
+    
     myfile.close();
 
     return 0;
