@@ -92,6 +92,10 @@ void Tape::move(bool direction){
     }
 }
 
+std::string Tape::getTape(){
+    std::string string(tape.begin(), tape.end());
+    return string;
+}
 
 std::vector<char> State::getEventsOfTransitions(){
     std::vector<char> events;
@@ -273,18 +277,16 @@ int getFirstElement(std::string line){
     return x;
 }
 
-std::vector<char> getString(){
+std::vector<char> getString(std::string string){
     bool run = true;
     int count=0;
     std::vector<char> tape, alphabet;
-    std::string string;
     std::vector<std::string> lines;
     lines = GetLines("inputs/input");
     alphabet = strToVecChar(lines[1]);
 
 
     do{
-        std::cin >> string;
         if(string.size()==1 && string[0]=='_'){
             tape.insert(tape.begin(),3,'_');
             break;
@@ -303,6 +305,7 @@ std::vector<char> getString(){
         }
 
         else{
+            std::cin >> string;
             std::cout<< FRED("String not accepted, try again") << std::endl;          
             count = 0;
         }
@@ -318,4 +321,8 @@ int getInitialState(std::vector<State> &states){
         if(states[i].getInitial())
             break;
     return i;
+}
+
+void writeDoc(std::string s, std::fstream &myfile){
+    myfile << s << std::endl;
 }

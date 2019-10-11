@@ -38,6 +38,7 @@ private:
     int tape_head;
 public:
     Tape(std::vector<char> a);
+    std::string getTape();
     char read();
     void update(char new_event);
     void move(bool direction);
@@ -52,5 +53,9 @@ std::vector<char> vecMinusVec(std::vector<char> &vector1, const std::vector<char
 int getNumberOfState(std::vector<State> &states, int state);
 void fillStates(std::vector<State> &states, const std::vector<char>& alphabet);
 int getFirstElement(std::string line);
-std::vector<char> getString();
+std::vector<char> getString(std::string string);
 int getInitialState(std::vector<State> &states);//Return the 
+//write a string into the document
+void writeDoc(std::string s, std::fstream &myfile);
+void travel(int actual_state, int next_state, char tape_actual_char, Tape &tape, std::vector<State> &states);
+void travel_r(int actual_state, int next_state, char tape_actual_char, Tape &tape, std::vector<State> &states);
