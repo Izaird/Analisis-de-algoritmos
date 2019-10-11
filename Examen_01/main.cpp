@@ -6,16 +6,14 @@ int main(int argc, char const *argv[]){
     std::vector<State> states;
     // std::vector<char> test= {'_','a','a','a','b','b','b','_'};
     char event, tape_actual_char;
-    int actual_state, next_state;
+    int actual_state, next_state,rule,size_of_L,repetitions;
+    std::fstream myfile; 
+    std::string cellular_answer, turing_answer;
 
     states= createStates();
     std::cout << FGRN("Insert the tape: ") << std::endl;
-    TuringTape tape_t(getString());
 
     actual_state = getInitialState(states);
-    int rule,size_of_L,repetitions;
-    std::fstream myfile; 
-    std::string cellular_answer;
     myfile.open("output", std::ofstream::out | std::ofstream::trunc);//I clear the document
     CellularTape tape_c;
     TruthTable table;
@@ -29,9 +27,13 @@ int main(int argc, char const *argv[]){
     tape_c.fillOneBit(size_of_L);
     cellular_answer = runCellular(tape_c,table,rule,repetitions,myfile);
     std::cout << cellular_answer << std::endl;
+
     
     do{
-
+        TuringTape tape_t(getString(cellular_answer));
+        turing_answer = travel(actual_state,next_state,tape_actual_char,tape_t,states);
+        tape_c.fillStr(turing_answer);
+        cellular_answer = runCellular(tape_c,table,rule,repetitions,myfile);
     }while(true);
     
     

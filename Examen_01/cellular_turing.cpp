@@ -181,7 +181,9 @@ TuringTape::TuringTape(std::vector<char> a){
 }
 
 std::string TuringTape::getTape(){
-    std::string string(tape.begin(),tape.end());
+    std::vector<char> copy = tape;
+    copy.erase(std::remove(copy.begin(), copy.end(), '_'), copy.end());
+    std::string string(copy.begin(), copy.end());
     return string;
 }
 
@@ -291,7 +293,7 @@ std::vector<State> createStates(){
     std::vector<Transition> transitions_doc;
     std::vector<State> states;
     int initial_state, acceptance_state;
-    lines = GetLines("inputs/input");
+    lines = GetLines("input");
     states_doc = strToVecInt(lines[0]);
     states_doc.push_back(-1);
     alphabet = strToVecChar(lines[1]);
@@ -400,7 +402,7 @@ std::vector<char> getString(std::string string){
     int count=0;
     std::vector<char> tape, alphabet;
     std::vector<std::string> lines;
-    lines = GetLines("inputs/input");
+    lines = GetLines("input");
     alphabet = strToVecChar(lines[1]);
 
 
