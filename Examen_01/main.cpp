@@ -1,24 +1,18 @@
 #include "cellular_turing.h"
-
-std::string runCellular(CellularTape &tape, TruthTable &table, int rule, int repetitions, std::fstream &myfile){
-    std::vector<bool> aux_tape;
-    std::string string;
-    for(int i=0; i<repetitions;i++){
-        for(int j=0; j<tape.size(); j++){
-            aux_tape.push_back(table.getCase(tape.read()));
-            tape.move();
-        }
-        writeDoc(tape.print(), myfile);
-        string = tape.print();
-        tape.update(aux_tape);
-        aux_tape.clear();
-    }
-    
-    return string;
-}
+#include "color.h"
 
 
 int main(int argc, char const *argv[]){
+    std::vector<State> states;
+    // std::vector<char> test= {'_','a','a','a','b','b','b','_'};
+    char event, tape_actual_char;
+    int actual_state, next_state;
+
+    states= createStates();
+    std::cout << FGRN("Insert the tape: ") << std::endl;
+    TuringTape tape_t(getString());
+
+    actual_state = getInitialState(states);
     int rule,size_of_L,repetitions;
     std::fstream myfile; 
     std::string cellular_answer;
@@ -37,7 +31,7 @@ int main(int argc, char const *argv[]){
     std::cout << cellular_answer << std::endl;
     
     do{
-        
+
     }while(true);
     
     
@@ -46,3 +40,47 @@ int main(int argc, char const *argv[]){
     return 0;
 }
 
+
+
+std::string travel(int actual_state, int next_state, char tape_actual_char, TuringTape &tape, std::vector<State> &states){
+    std::string path;
+    do{
+        tape_actual_char = tape.read();
+        next_state = states[actual_state].getNextState(tape_actual_char);
+        tape.update(states[actual_state].getNewEvent(tape_actual_char));
+        tape.move(states[actual_state].getDirection(tape_actual_char));
+        path += std::to_string(actual_state ) + '(' + tape_actual_char + ')' ;
+        actual_state = next_state;
+        if(states[actual_state].getAcceptance()){
+            std::cout << "String accepted" << std::endl;
+            std::cout << path << std::endl;
+            break;
+        }
+        else if(actual_state == -1){
+            std::cout << "String rejected" << std::endl;
+            std::cout << path << std::endl;
+            break;
+        }
+        else
+        path += "\u2192";
+    }while(true);
+    return tape.getTape();
+
+}
+
+std::string runCellular(CellularTape &tape, TruthTable &table, int rule, int repetitions, std::fstream &myfile){
+    std::vector<bool> aux_tape;
+    std::string string;
+    for(int i=0; i<repetitions;i++){
+        for(int j=0; j<tape.size(); j++){
+            aux_tape.push_back(table.getCase(tape.read()));
+            tape.move();
+        }
+        writeDoc(tape.print(), myfile);
+        string = tape.print();
+        tape.update(aux_tape);
+        aux_tape.clear();
+    }
+    
+    return string;
+}

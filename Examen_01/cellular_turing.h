@@ -81,6 +81,7 @@ private:
     int tape_head;
 public:
     TuringTape(std::vector<char> a);
+    std::string getTape();
     char read();
     void update(char new_event);
     void move(bool direction);
@@ -97,5 +98,7 @@ std::vector<char> vecMinusVec(std::vector<char> &vector1, const std::vector<char
 int getNumberOfState(std::vector<State> &states, int state);
 void fillStates(std::vector<State> &states, const std::vector<char>& alphabet);
 int getFirstElement(std::string line);
-std::vector<char> getString();
+std::vector<char> getString(std::string string);
 int getInitialState(std::vector<State> &states);//Return the 
+std::string travel(int actual_state, int next_state, char tape_actual_char, TuringTape &tape, std::vector<State> &states);
+std::string runCellular(CellularTape &tape, TruthTable &table, int rule, int repetitions, std::fstream &myfile);

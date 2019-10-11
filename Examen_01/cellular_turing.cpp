@@ -6,6 +6,7 @@ CellularTape::CellularTape(){
     tape.clear();
 }
 
+
 int CellularTape::read(){
     std::vector<bool> a;
     int aux;
@@ -61,6 +62,7 @@ void CellularTape::fill(int size){
 }
 
 void CellularTape::fillOneBit(int size){
+    tape.clear();
     for (int i = 0; i < size; i++)
         tape.push_back(0);
     int aux = size/2;
@@ -68,6 +70,7 @@ void CellularTape::fillOneBit(int size){
 }
 
 void CellularTape::fillStr(std::string string){
+    tape.clear();
     for (int i = 0; i < string.size(); i++){
         if(string[i]=='1')
             tape.push_back(1);
@@ -175,6 +178,11 @@ int State::getNextState(char event){
 TuringTape::TuringTape(std::vector<char> a){
     tape = a;
     tape_head = 1;
+}
+
+std::string TuringTape::getTape(){
+    std::string string(tape.begin(),tape.end());
+    return string;
 }
 
 char TuringTape::read(){
@@ -387,18 +395,16 @@ int getFirstElement(std::string line){
     return x;
 }
 
-std::vector<char> getString(){
+std::vector<char> getString(std::string string){
     bool run = true;
     int count=0;
     std::vector<char> tape, alphabet;
-    std::string string;
     std::vector<std::string> lines;
     lines = GetLines("inputs/input");
     alphabet = strToVecChar(lines[1]);
 
 
     do{
-        std::cin >> string;
         if(string.size()==1 && string[0]=='_'){
             tape.insert(tape.begin(),3,'_');
             break;
@@ -417,6 +423,7 @@ std::vector<char> getString(){
         }
 
         else{
+            std::cin >> string;
             std::cout<< FRED("String not accepted, try again") << std::endl;          
             count = 0;
         }
