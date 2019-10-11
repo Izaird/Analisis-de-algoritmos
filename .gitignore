@@ -1,5 +1,6 @@
 Practica_00/TuringMachine/*.o
 Practica_00/TuringMachine/turing_machine
+Practica_00/TuringMachine/output
 Practica_00/DFA/*.o
 Practica_00/DFA/DFA
 Practica_01/output.txt
