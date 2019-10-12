@@ -14,8 +14,12 @@ public:
     int read();//return an array with the tape_head element, the previous and the next element
     void update(std::vector<bool> &new_tape);
     void move();//move the tape_head one spot
-    void fill(int size);//It's gonna fill the vector with random numbers 
-    std::string print();
+    //Fill the vector with random numbers
+    void fill(int size);
+    //Fill the vector only with 1 bit at the center of the vector
+    void fillOneBit(int size);
+    //Fill the vector with a string 
+    void fillStr(std::string string);    std::string print();
     int size();
 };
 

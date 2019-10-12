@@ -16,7 +16,7 @@ int main(){
         std::cin>>size_of_l;
         std::cout << "Enter the number of repetitions"<<std::endl;
         std::cin>>repetitions;
-        tape.fill(size_of_l);
+        tape.fillOneBit(size_of_l);
         for(int i=0; i<repetitions;i++){
             for(int j=0; j<tape.size(); j++){
                 aux_tape.push_back(table.getCase(tape.read()));

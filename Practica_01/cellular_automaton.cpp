@@ -59,6 +59,25 @@ void Tape::fill(int size){
             tape.push_back( d(gen));
 }
 
+void Tape::fillOneBit(int size){
+    tape.clear();
+    for (int i = 0; i < size; i++)
+        tape.push_back(0);
+    int aux = size/2;
+    tape.at(aux) = 1;
+}
+
+void Tape::fillStr(std::string string){
+    tape.clear();
+    for (int i = 0; i < string.size(); i++){
+        if(string[i]=='1')
+            tape.push_back(1);
+        else
+            tape.push_back(0);
+    }
+    
+}
+
 std::string Tape::print(){
     std::string string;
     for(std::vector<bool>::iterator iter = tape.begin(); iter != tape.end(); ++iter){
