@@ -305,8 +305,8 @@ std::vector<char> getString(std::string string){
         }
 
         else{
-            std::cin >> string;
             std::cout<< FRED("String not accepted, try again") << std::endl;          
+            std::cin >> string;
             count = 0;
         }
 
