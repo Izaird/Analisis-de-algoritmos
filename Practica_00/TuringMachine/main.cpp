@@ -59,9 +59,8 @@ void travel(int actual_state, int next_state, char tape_actual_char, Tape &tape,
     output.close();
 }
 
-
 void travel_r(int actual_state, int next_state, char tape_actual_char, Tape &tape, std::vector<State> &states){
-    if(states[actual_state].getAcceptance()){
+    if(states[actual_state].getAcceptance() == true){
         std::cout << "string accepted" << std::endl;
     }
     else if(actual_state == -1){
